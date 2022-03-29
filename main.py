@@ -95,6 +95,7 @@ def main():
                     board.place_move(player, pillar, row)
                     break
                 else:
+                    print('invalid move')
                     continue
 
             # check for winner
