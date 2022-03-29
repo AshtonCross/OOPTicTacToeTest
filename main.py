@@ -1,4 +1,4 @@
-# here's a fun little project i threw together to learn object oriented programming
+# here's a fun little project i threw together to learn object-oriented programming
 # Ashton Cross 2-10-2022
 
 import sys
