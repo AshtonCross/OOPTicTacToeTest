@@ -154,4 +154,11 @@ class GameBoard:
             return 'o'
 
         return None
+        
+    def isFull(self):
+        for x in self.board:
+            for y in x:
+                if y == '-':
+                    return False
 
+        return True

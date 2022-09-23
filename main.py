@@ -112,6 +112,15 @@ def main():
                 input()
                 game_is_over = True
 
+            # if there's no winner, check if the board is full and if
+            # there's a stalemate.
+
+            if board.isFull():
+                print(board.str_format(board_format))
+                print("\nStalemate!")
+                input()
+                game_is_over = True
+
             # prep for next round
             round_number += 1
 
