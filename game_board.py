@@ -3,7 +3,6 @@ class GameBoard:
     # define the actual playspace.
 
     def __init__(self):
-        self._last_move = list()  # will contain cooridinates for undo function (might not even get used)
 
         self.board = [
             ['-', '-', '-'],
@@ -12,24 +11,28 @@ class GameBoard:
         ]
 
     def is_valid_move(self, pillar, row):
-        if not self.board[pillar][row] == '-':
-            return False
-        else:
-            return True
+        # this function validates the move *AND offsets the input to match the array*
 
-    # undo move if necessary. Not tested yet. Don't use.
-    def undo_move(self):
-        if self._last_move == list():
+        try:
+            row = int(row)
+            pillar = int(pillar)
+
+            row -= 1
+            pillar = abs(3 - pillar)   
+
+            if (self.board[pillar][row] == '-'):
+                return True, pillar, row    
+                
+        except (TypeError, ValueError, IndexError):
             pass
-        else:
-            pillar = self._last_move[0]
-            row = self._last_move[1]
-            self.place_move('-', pillar, row)
+
+        return False, pillar, row
+
 
     def place_move(self, character_input, pillar, row):
         # place move
         self.board[pillar][row] = character_input
-        self._last_move = [pillar, row]
+
 
     def str_format(self, style='normal'):
 
@@ -44,6 +47,7 @@ class GameBoard:
                 formatted_board += '\n'
 
             return formatted_board
+
 
         # boxy style
         elif style == 'boxy':
@@ -96,19 +100,9 @@ class GameBoard:
 
             return formatted_board
 
-        # technical, for running tests on the board
-        if style == 'technical':
-            formatted_board = ''
-
-            for row in self.board:
-                for space in row:
-                    formatted_board += space
-
-            return formatted_board
-
-        # what even are you asking me to do???
         else:
             raise Exception('Unknown format type \'' + style + '\'.')
+
 
     def win_check(self):
         # return 'x' or 'o' or None if no winner
@@ -138,7 +132,7 @@ class GameBoard:
                 return 'o'
 
         # left to right diagonal
-        left_to_right = self.str_format("technical")[0] + self.str_format("technical")[4] + self.str_format("technical")[8]
+        left_to_right = self.board[0][0] + self.board[1][1] + self.board[2][2]
 
         if left_to_right == 'xxx':
             return 'x'
@@ -146,7 +140,7 @@ class GameBoard:
             return 'o'
 
         # right to left diagonal
-        right_to_left = self.str_format("technical")[2] + self.str_format("technical")[4] + self.str_format("technical")[6]
+        right_to_left = self.board[2][0] + self.board[1][1] + self.board[0][2]
 
         if right_to_left == 'xxx':
             return 'x'
