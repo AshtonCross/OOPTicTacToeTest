@@ -13,7 +13,7 @@ def take_move_input(in_str):
         if move == 'EXIT':
             sys.exit()
         if move == 'PRINT':
-            print(board.str_format(board_format))
+            print(board.str_format())
             continue
 
         return move
@@ -44,14 +44,14 @@ def menu():
             menu()
 
 def game(board_format):
-    board = GameBoard()
+    board = GameBoard(board_format)
     round_number = 1
 
     while True:
 
         # print game board
         print("\n\nRound", round_number)
-        print(board.str_format(board_format))
+        print(board.str_format())
 
         # decide who's turn it is
         if round_number % 2 == 0:
@@ -75,7 +75,7 @@ def game(board_format):
 
             # input has been offset by the valid move function
             board.place_move(player, pillar, row)
-            print(board.str_format(board_format))
+            print(board.str_format())
             break
 
 
@@ -96,7 +96,7 @@ def game(board_format):
         # there's a stalemate.
 
         if board.isFull():
-            print(board.str_format(board_format))
+            print(board.str_format())
             print("\nStalemate!")
             input()
             return

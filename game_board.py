@@ -2,7 +2,8 @@ class GameBoard:
 
     # define the actual playspace.
 
-    def __init__(self):
+    def __init__(self, board_format):
+        self.board_format = board_format
 
         self.board = [
             ['-', '-', '-'],
@@ -34,74 +35,78 @@ class GameBoard:
         self.board[pillar][row] = character_input
 
 
-    def str_format(self, style='normal'):
+    def str_boxy(self):
+        formatted_board = ''
 
-        # default and somewhat plain format style
-        if style == 'normal':
-            formatted_board = ''
+        # row_position = 0
+        formatted_board += '+---+---+---+\n'
 
-            for row in self.board:
-                for space in row:
-                    formatted_board += space + ' '
+        for row in self.board:
 
-                formatted_board += '\n'
+            space_position = 0
+            for space in row:
 
-            return formatted_board
+                if space_position == 0:
+                    formatted_board += '| ' + space + ' | '
+                else:
+                    formatted_board += space + ' | '
+
+                space_position += 1
+
+            # row_position += 1
+            formatted_board += '\n+---+---+---+\n'
+
+        return formatted_board
 
 
-        # boxy style
-        elif style == 'boxy':
-            formatted_board = ''
+    def str_classic(self):
+        formatted_board = ''
 
-            # row_position = 0
-            formatted_board += '+---+---+---+\n'
+        row_position = 0
 
-            for row in self.board:
+        for row in self.board:
 
-                space_position = 0
-                for space in row:
+            if 0 < row_position < 3:
+                formatted_board += '\n---+---+---\n'
 
-                    if space_position == 0:
-                        formatted_board += '| ' + space + ' | '
-                    else:
-                        formatted_board += space + ' | '
+            space_position = 0
+            for space in row:
 
-                    space_position += 1
+                if space_position == 0:
+                    formatted_board += ' ' + space + ' | '
+                elif space_position == 2:
+                    formatted_board += space
+                else:
+                    formatted_board += space + ' | '
 
-                # row_position += 1
-                formatted_board += '\n+---+---+---+\n'
+                space_position += 1
 
-            return formatted_board
+            row_position += 1
 
-        # classic style
-        elif style == 'classic':
-            formatted_board = ''
+        return formatted_board
 
-            row_position = 0
 
-            for row in self.board:
+    def str_normal(self):
+        formatted_board = ''
 
-                if 0 < row_position < 3:
-                    formatted_board += '\n---+---+---\n'
+        for row in self.board:
+            for space in row:
+                formatted_board += space + ' '
 
-                space_position = 0
-                for space in row:
+            formatted_board += '\n'
 
-                    if space_position == 0:
-                        formatted_board += ' ' + space + ' | '
-                    elif space_position == 2:
-                        formatted_board += space
-                    else:
-                        formatted_board += space + ' | '
+        return formatted_board
 
-                    space_position += 1
 
-                row_position += 1
-
-            return formatted_board
-
+    def str_format(self):
+        if self.board_format == 'normal':
+            return self.str_normal()
+        elif self.board_format == 'boxy':
+            return self.str_boxy()
+        elif self.board_format == 'classic':
+            return self.str_classic()
         else:
-            raise Exception('Unknown format type \'' + style + '\'.')
+            raise Exception('Unknown format type \'' + self.board_format + '\'.')
 
 
     def win_check(self):
