@@ -1,5 +1,5 @@
-# here's a fun little project i threw together to learn object-oriented programming
-# Ashton Cross 2-10-2022
+# Here's a fun little project I threw together to learn object-oriented programming with python.
+# Ashton Cross 2-10-2022, updated 9-4-2025
 
 import sys
 
